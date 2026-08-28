@@ -1,14 +1,14 @@
 :root {
-  /* Paleta de colores Duo Shop Store */
-  --color-primario: #1B5E20;     /* Verde Oscuro */
-  --color-secundario: #14B8A6;   /* Cian/Verde Agua "Duo" */
-  --color-acento: #F9A8D4;       /* Rosa Pastel "Duo" */
+  /* Paleta Real extraída de Duo Shop Store */
+  --color-primario: #8C7865;       /* Tono Taupe / Nude elegante para textos principales y acentos */
+  --color-secundario: #2DD4BF;     /* Verde Agua / Cian corporativo del logo */
+  --color-acento: #F472B6;         /* Rosa suave para detalles y badges */
   
-  --color-fondo: #F4F6F8;        /* Fondo muy claro */
+  --color-fondo: #FAF8F5;          /* Fondo nude muy claro, cálido y limpio */
   --color-tarjeta: #FFFFFF;
-  --color-texto: #1a1a1a;
-  --color-texto-secundario: #64748b;
-  --color-borde: #e2e8f0;
+  --color-texto: #2D2926;          /* Gris oscuro suave, nada de negro puro */
+  --color-texto-secundario: #8C827A;
+  --color-borde: #EFECE6;          /* Bordes sutiles cálidos */
 }
 
 * {
@@ -21,21 +21,22 @@
 body {
   background-color: var(--color-fondo);
   color: var(--color-texto);
-  padding-bottom: 70px; /* Espacio para el footer en móviles */
+  padding-bottom: 70px;
 }
 
 .hidden {
   display: none !important;
 }
 
-/* Navbar */
+/* Navbar estilo Boutique */
 .navbar {
   background-color: var(--color-tarjeta);
-  padding: 10px 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  padding: 12px 16px;
+  box-shadow: 0 1px 3px rgba(140, 120, 101, 0.08);
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid var(--color-borde);
 }
 
 .nav-container {
@@ -53,19 +54,23 @@ body {
 }
 
 .logo-img {
-  height: 40px;
-  width: 40px;
+  height: 42px;
+  width: 42px;
   object-fit: contain;
+  border-radius: 50%;
 }
 
 .brand-text h1 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-primario);
+  color: #1A1A1A;
+  letter-spacing: -0.5px;
 }
 .store-tagline {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--color-texto-secundario);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .nav-actions {
@@ -75,18 +80,18 @@ body {
 }
 
 .currency-toggle-btn {
-  background: #f1f5f9;
-  color: var(--color-texto-secundario);
+  background: #F4F1EA;
+  color: var(--color-texto);
   border: 1px solid var(--color-borde);
   padding: 6px 12px;
   border-radius: 20px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
 }
 
 .cart-btn {
-  background: var(--color-primario);
+  background: var(--color-secundario);
   color: #fff;
   border: none;
   padding: 6px 12px;
@@ -99,39 +104,43 @@ body {
   gap: 6px;
 }
 
-/* Banner Hero */
+/* Banner Hero Estilo Editorial (Nude y Minimalista) */
 .store-hero {
-  background-color: var(--color-primario);
-  color: white;
-  padding: 20px 16px;
-  margin-top: 10px;
+  background: linear-gradient(135deg, #F3EDE2 0%, #EADFCF 100%);
+  color: #3D352E;
+  padding: 24px 16px;
+  border-bottom: 1px solid var(--color-borde);
 }
 .hero-banner-content {
     max-width: 1000px;
     margin: 0 auto;
 }
 .hero-text h2 {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   margin-bottom: 4px;
+  font-weight: 700;
 }
 .hero-text p {
-  font-size: 0.85rem;
-  opacity: 0.9;
+  font-size: 0.82rem;
+  opacity: 0.85;
 }
 .hero-badge {
-  background: rgba(255,255,255,0.2);
-  padding: 3px 8px;
+  background: rgba(45, 212, 191, 0.2);
+  color: #0F766E;
+  padding: 3px 10px;
   border-radius: 20px;
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.68rem;
+  font-weight: 700;
   display: inline-block;
   margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Controles Búsqueda */
 .controls-container {
   max-width: 1200px;
-  margin: 16px auto 16px auto;
+  margin: 16px auto;
   padding: 0 16px;
 }
 
@@ -140,9 +149,10 @@ body {
   align-items: center;
   background: var(--color-tarjeta);
   border: 1px solid var(--color-borde);
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin-bottom: 10px;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
 
 .search-bar input {
@@ -152,77 +162,89 @@ body {
   margin-left: 8px;
   font-size: 14px;
   background: transparent;
+  color: var(--color-texto);
 }
 
 .categories-bar {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   overflow-x: auto;
   padding-bottom: 4px;
-  scrollbar-width: thin;
+  scrollbar-width: none;
 }
 
 .cat-btn {
   background: var(--color-tarjeta);
   border: 1px solid var(--color-borde);
-  padding: 6px 14px;
-  border-radius: 16px;
+  padding: 6px 16px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 12px;
   font-weight: 500;
   white-space: nowrap;
+  color: var(--color-texto);
 }
 
 .cat-btn.active {
-  background: var(--color-secundario);
+  background: var(--color-texto);
   color: #fff;
-  border-color: var(--color-secundario);
+  border-color: var(--color-texto);
 }
 
 /* Grid Productos */
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 0 12px;
 }
 
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 10px;
+}
+
+@media(min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
 }
 
 .product-card {
   background: var(--color-tarjeta);
   border: 1px solid var(--color-borde);
-  border-radius: 8px;
-  padding: 10px;
+  border-radius: 12px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
 }
 
 .product-img {
   width: 100%;
-  height: 140px;
+  height: 150px;
   object-fit: contain;
-  border-radius: 4px;
-  margin-bottom: 6px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: #FCFBFA;
 }
 
 .product-brand {
-  font-size: 10px;
+  font-size: 9px;
   text-transform: uppercase;
   color: var(--color-texto-secundario);
   font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .product-title {
   font-size: 12px;
   font-weight: 600;
-  margin: 2px 0 6px 0;
-  line-height: 1.2;
+  margin: 2px 0 8px 0;
+  line-height: 1.3;
+  color: var(--color-texto);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -232,13 +254,34 @@ body {
 .product-price-main {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-primario);
+  color: #111827;
 }
 
 .product-price-sub {
   font-size: 10px;
   color: var(--color-texto-secundario);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.badge-popular {
+  background: #FCE7F3;
+  color: #DB2777;
+}
+
+.badge-agotado {
+  background: #F3F4F6;
+  color: #6B7280;
 }
 
 .btn-add {
@@ -246,5 +289,199 @@ body {
   color: #fff;
   border: none;
   padding: 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity 0.2s;
+}
+
+.btn-add:hover {
+  opacity: 0.9;
+}
+
+.btn-disabled {
+  background: #E5E7EB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+/* Carrito Drawer Estilo Limpio */
+.cart-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+.cart-content {
+  position: relative;
+  background: var(--color-tarjeta);
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+}
+
+.cart-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--color-borde);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--color-texto-secundario);
+}
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.cart-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.cart-item-name {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cart-item-price {
+  font-size: 11px;
+  color: var(--color-texto-secundario);
+}
+
+.cart-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-qty {
+  background: #F4F1EA;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: #EF4444;
+  cursor: pointer;
+  font-size: 13px;
+  margin-left: 4px;
+}
+
+.cart-footer {
+  padding: 16px;
+  border-top: 1px solid var(--color-borde);
+  background: #FAF8F5;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.secondary-total {
+  font-size: 11px;
+  color: var(--color-texto-secundario);
+  margin-bottom: 12px;
+}
+
+.checkout-delivery-box {
+  margin-bottom: 12px;
+  font-size: 11px;
+}
+
+.checkout-delivery-box label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: var(--color-texto);
+}
+
+.checkout-delivery-box select, 
+.checkout-delivery-box input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--color-borde);
+  border-radius: 6px;
+  font-size: 12px;
+  background: #fff;
+}
+
+.btn-primary {
+  background: #111827;
+  color: #fff;
+  border: none;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Footer Minimalista */
+.footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 11px;
+  color: var(--color-texto-secundario);
+  border-top: 1px solid var(--color-borde);
+  margin-top: 40px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: var(--color-texto);
+  text-decoration: none;
+  font-weight: 600;
+}
