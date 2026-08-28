@@ -1,5 +1,5 @@
 // URL DE TU WEB APP DE GOOGLE APPS SCRIPT (Reemplaza con tu URL desplegada)
-const API_URL = "https://script.google.com/macros/s/AKfycbz.../exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbys7czBNdbtlgjgJrRVmO2ghb3pqf5B-0FyxCleHL5baYbNg76h3OjiA6-EwxzQtMFY/exec";
 
 let allProducts = [];
 let filteredProducts = [];
