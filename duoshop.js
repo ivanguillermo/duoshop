@@ -1,4 +1,4 @@
-// URL DE TU WEB APP DE GOOGLE APPS SCRIPT (Reemplaza con tu URL desplegada)
+// URL DE TU WEB APP DE GOOGLE APPS SCRIPT
 const API_URL = "https://script.google.com/macros/s/AKfycbys7czBNdbtlgjgJrRVmO2ghb3pqf5B-0FyxCleHL5baYbNg76h3OjiA6-EwxzQtMFY/exec";
 
 let allProducts = [];
@@ -6,7 +6,7 @@ let filteredProducts = [];
 let currentCategory = "todos";
 let currentSearch = "";
 let currentPage = 1;
-const itemsPerPage = 12; // 12 por página en mobile (se ajusta a 4 por fila en desktop)
+const itemsPerPage = 12;
 
 document.addEventListener("DOMContentLoaded", () => {
     fetchProducts();
@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function fetchProducts() {
-    // Si no tienes configurada la URL aún, puedes descomentar datos de prueba:
     fetch(API_URL)
         .then(res => res.json())
         .then(data => {
@@ -64,14 +63,19 @@ function setupEventListeners() {
     // Botón PDF
     document.getElementById("downloadPdfBtn").addEventListener("click", () => {
         alert("Generando catálogo PDF oficial a través de Google Apps Script y Google Slides...");
-        // Opcional: abrir script que genera el PDF en Drive
     });
 }
 
 function filterAndRender() {
     filteredProducts = allProducts.filter(item => {
-        const matchesCategory = currentCategory === "todos" || item.categoria.toLowerCase() === currentCategory.toLowerCase();
-        const matchesSearch = item.titulo.toLowerCase().includes(currentSearch) || item.descripcion.toLowerCase().includes(currentSearch);
+        // USO DE PROTECCIÓN (|| ""): Evita que falle si alguna celda está vacía (undefined)
+        const categoriaItem = (item.categoria || "").toLowerCase();
+        const tituloItem = (item.Titulo || "").toLowerCase();
+        const descItem = (item.descripcion || "").toLowerCase();
+
+        const matchesCategory = currentCategory === "todos" || categoriaItem === currentCategory.toLowerCase();
+        const matchesSearch = tituloItem.includes(currentSearch) || descItem.includes(currentSearch);
+        
         return matchesCategory && matchesSearch;
     });
 
@@ -94,17 +98,25 @@ function renderGrid() {
 
     let html = "";
     paginatedItems.forEach(item => {
+        // NOTA: Se usa item.ID y item.Titulo con mayúsculas tal cual están en tu Google Sheet
+        const idProd = item.ID || '';
+        const tituloProd = item.Titulo || 'Sin título';
+        const catProd = item.categoria || 'General';
+        const descProd = item.descripcion || '';
+        const precioProd = Number(item.precio) || 0;
+        const imagenProd = item.imagen || item.imagen_link || 'duo_logo.jpg';
+
         html += `
-            <div class="product-card" onclick="openModal('${item.id}')">
+            <div class="product-card" onclick="openModal('${idProd}')">
                 <div class="product-img-wrap">
-                    <span class="product-cat-tag">${item.categoria}</span>
-                    <img src="${item.imagen || 'duo_logo.jpg'}" alt="${item.titulo}" loading="lazy">
+                    <span class="product-cat-tag">${catProd}</span>
+                    <img src="${imagenProd}" alt="${tituloProd}" loading="lazy" onerror="this.src='duo_logo.jpg'">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">${item.titulo}</h3>
-                    <p class="product-desc">${item.descripcion}</p>
+                    <h3 class="product-title">${tituloProd}</h3>
+                    <p class="product-desc">${descProd}</p>
                     <div class="product-footer">
-                        <span class="product-price">$${Number(item.precio).toFixed(2)}</span>
+                        <span class="product-price">$${precioProd.toFixed(2)}</span>
                         <button class="btn-card-detail">Ver más</button>
                     </div>
                 </div>
@@ -137,16 +149,18 @@ function changePage(page) {
 }
 
 function openModal(id) {
-    const product = allProducts.find(p => String(p.id) === String(id));
+    const product = allProducts.find(p => String(p.ID) === String(id));
     if (!product) return;
 
-    document.getElementById("modalImg").src = product.imagen || 'duo_logo.jpg';
-    document.getElementById("modalCategory").innerText = product.categoria;
-    document.getElementById("modalTitle").innerText = product.titulo;
-    document.getElementById("modalPrice").innerText = `$${Number(product.precio).toFixed(2)}`;
-    document.getElementById("modalDesc").innerText = product.descripcion;
+    document.getElementById("modalImg").src = product.imagen || product.imagen_link || 'duo_logo.jpg';
+    document.getElementById("modalCategory").innerText = product.categoria || '';
+    document.getElementById("modalTitle").innerText = product.Titulo || '';
+    document.getElementById("modalPrice").innerText = `$${Number(product.precio || 0).toFixed(2)}`;
+    document.getElementById("modalDesc").innerText = product.descripcion || '';
 
-    const waText = encodeURIComponent(`¡Hola Duo Shop Store! Estoy interesado/a en el producto: *${product.titulo}* ($${product.precio}) que vi en su catálogo web.`);
+    const tituloModal = product.Titulo || 'este producto';
+    const precioModal = product.precio || '0';
+    const waText = encodeURIComponent(`¡Hola Duo Shop Store! Estoy interesado/a en el producto: *${tituloModal}* ($${precioModal}) que vi en su catálogo web.`);
     document.getElementById("modalWaBtn").href = `https://wa.me/message/UOXSVOEIG73ME1?text=${waText}`;
 
     document.getElementById("productModal").classList.add("active");
