@@ -70,8 +70,8 @@ function setupEventListeners() {
 
 function filterAndRender() {
     filteredProducts = allProducts.filter(item => {
-        const matchesCategory = currentCategory === "todos" || item.category.toLowerCase() === currentCategory.toLowerCase();
-        const matchesSearch = item.title.toLowerCase().includes(currentSearch) || item.description.toLowerCase().includes(currentSearch);
+        const matchesCategory = currentCategory === "todos" || item.categoria.toLowerCase() === currentCategory.toLowerCase();
+        const matchesSearch = item.titulo.toLowerCase().includes(currentSearch) || item.descripcion.toLowerCase().includes(currentSearch);
         return matchesCategory && matchesSearch;
     });
 
