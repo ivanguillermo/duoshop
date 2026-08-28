@@ -2,11 +2,11 @@ const CACHE_NAME = 'duo-shop-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/style.css',
-  '/app.js',
+  '/duoshop.css',
+  '/duoshop.js',
   '/manifest.json',
-  '/duo_logo.jpg',
-  '/image_c0cba9.jpg'
+  '/assets/duo_logo.jpg',
+  '/assets/ubicacion.png'
 ];
 
 self.addEventListener('install', event => {
