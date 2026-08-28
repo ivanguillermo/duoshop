@@ -15,17 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function fetchProducts() {
     // Si no tienes configurada la URL aún, puedes descomentar datos de prueba:
-    /*
-    allProducts = [
-        {id: 1, title: "Fragancia Victoria's Secret XO", category: "Fragancias", price: 25.00, description: "Fragancia mist original de 250ml.", image: "image_c0cba9.jpg"},
-        {id: 2, title: "Labial Matte MAC Original", category: "Makeup", price: 18.00, description: "Labial de larga duración tonos variados.", image: "duo_logo.jpg"},
-        {id: 3, title: "Sérum Facial Hidratante The Ordinary", category: "Skincare", price: 22.00, description: "Ácido hialurónico puro para hidratación profunda.", image: "duo_logo.jpg"},
-        {id: 4, title: "Vestido Casual Importado", category: "Ropa", price: 30.00, description: "Vestido elegante talla S/M importado.", image: "duo_logo.jpg"}
-    ];
-    filterAndRender();
-    return;
-    */
-
     fetch(API_URL)
         .then(res => res.json())
         .then(data => {
@@ -108,14 +97,14 @@ function renderGrid() {
         html += `
             <div class="product-card" onclick="openModal('${item.id}')">
                 <div class="product-img-wrap">
-                    <span class="product-cat-tag">${item.category}</span>
-                    <img src="${item.image || 'duo_logo.jpg'}" alt="${item.title}" loading="lazy">
+                    <span class="product-cat-tag">${item.categoria}</span>
+                    <img src="${item.imagen || 'duo_logo.jpg'}" alt="${item.titulo}" loading="lazy">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">${item.title}</h3>
-                    <p class="product-desc">${item.description}</p>
+                    <h3 class="product-title">${item.titulo}</h3>
+                    <p class="product-desc">${item.descripcion}</p>
                     <div class="product-footer">
-                        <span class="product-price">$${Number(item.price).toFixed(2)}</span>
+                        <span class="product-price">$${Number(item.precio).toFixed(2)}</span>
                         <button class="btn-card-detail">Ver más</button>
                     </div>
                 </div>
@@ -151,13 +140,13 @@ function openModal(id) {
     const product = allProducts.find(p => String(p.id) === String(id));
     if (!product) return;
 
-    document.getElementById("modalImg").src = product.image || 'duo_logo.jpg';
-    document.getElementById("modalCategory").innerText = product.category;
-    document.getElementById("modalTitle").innerText = product.title;
-    document.getElementById("modalPrice").innerText = `$${Number(product.price).toFixed(2)}`;
-    document.getElementById("modalDesc").innerText = product.description;
+    document.getElementById("modalImg").src = product.imagen || 'duo_logo.jpg';
+    document.getElementById("modalCategory").innerText = product.categoria;
+    document.getElementById("modalTitle").innerText = product.titulo;
+    document.getElementById("modalPrice").innerText = `$${Number(product.precio).toFixed(2)}`;
+    document.getElementById("modalDesc").innerText = product.descripcion;
 
-    const waText = encodeURIComponent(`¡Hola Duo Shop Store! Estoy interesado/a en el producto: *${product.title}* ($${product.price}) que vi en su catálogo web.`);
+    const waText = encodeURIComponent(`¡Hola Duo Shop Store! Estoy interesado/a en el producto: *${product.titulo}* ($${product.precio}) que vi en su catálogo web.`);
     document.getElementById("modalWaBtn").href = `https://wa.me/message/UOXSVOEIG73ME1?text=${waText}`;
 
     document.getElementById("productModal").classList.add("active");
