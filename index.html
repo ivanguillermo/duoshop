@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- SEO & Metadatos Base -->
+  <title>Duo Shop Store | Catálogo Online</title>
+  <meta name="description" content="Catálogo completo de productos importados, maquillaje y ropa de Duo Shop Store en Yaracuy.">
+  <meta name="author" content="Duo Shop Store">
+  
+  <!-- Favicon Dinámico (Usando el logo de Duo) -->
+  <link id="dynamic-favicon" rel="icon" type="image/png" href="https://i.imgur.com/fQhO7fI.png">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Enlace PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1B5E20"> <!-- Verde Oscuro -->
+</head>
+<body>
+
+  <!-- Cabecera Dinámica -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <img id="logo-tienda" src="https://i.imgur.com/fQhO7fI.png" alt="Duo Shop Store Logo" class="logo-img">
+        <div class="brand-text">
+          <h1 id="nombre-tienda">Duo Shop Store</h1>
+          <p class="store-tagline">Tu tienda online en Yaracuy</p>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <!-- Switch de Moneda -->
+        <button id="btn-currency" class="currency-toggle-btn" onclick="toggleMoneda()">
+          <i class="fa-solid fa-coins"></i> <span id="label-currency">Ver en Bs.</span>
+        </button>
+
+        <!-- Botón Carrito -->
+        <button id="btn-cart" class="cart-btn" onclick="toggleCarrito()">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner de Bienvenida / Hero -->
+  <section class="store-hero">
+    <div class="hero-banner-content">
+      <div class="hero-text">
+        <span class="hero-badge"><i class="fa-solid fa-star"></i> Catálogo Exclusivo</span>
+        <h2 id="mensaje-bienvenida">¡Bienvenidos a Duo Shop Store!</h2>
+        <p id="horario-atencion">Pedidos vía Web 24/7 - Entregas en San Felipe</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Buscador y Filtros -->
+  <div class="controls-container">
+    <div class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="input-busqueda" placeholder="Buscar producto o marca..." oninput="filtrarProductos()">
+    </div>
+    <div id="categorias-container" class="categories-bar">
+      <!-- Botones de categoría generados dinámicamente -->
+    </div>
+  </div>
+
+  <!-- Catálogo de Productos -->
+  <main class="main-content">
+    <div id="loading" class="spinner">Cargando catálogo...</div>
+    <div id="grid-productos" class="product-grid">
+      <!-- Tarjetas de producto generadas dinámicamente -->
+    </div>
+  </main>
+
+  <!-- Modal / Drawer del Carrito -->
+  <div id="modal-carrito" class="cart-modal hidden">
+    <div class="cart-overlay" onclick="toggleCarrito()"></div>
+    <div class="cart-content">
+      <div class="cart-header">
+        <h3><i class="fa-solid fa-cart-shopping"></i> Tu Pedido</h3>
+        <button class="close-btn" onclick="toggleCarrito()">&times;</button>
+      </div>
+      <div id="items-carrito" class="cart-items">
+        <!-- Items agregados dinámicamente -->
+      </div>
+      <div class="cart-footer">
+        <div class="cart-totals">
+          <div class="total-row">
+            <span>Total USD:</span>
+            <strong id="total-usd">$0.00</strong>
+          </div>
+          <div class="total-row secondary-total">
+            <span id="label-total-bs">Total Bs:</span>
+            <strong id="total-bs">Bs. 0.00</strong>
+          </div>
+        </div>
+        
+        <!-- Sección de Checkout Delivery -->
+        <div class="checkout-delivery-box">
+          <!-- Tipo de Entrega -->
+          <label><i class="fa-solid fa-store"></i> Tipo de Entrega:</label>
+          <select id="select-tipo-entrega" onchange="cambiarTipoEntrega(this.value)">
+            <option value="delivery">Delivery a domicilio</option>
+            <option value="pickup">Retiro en Tienda (Pickup)</option>
+          </select>
+        
+          <!-- Contenedor dinámico de zonas (solo si es delivery) -->
+          <div id="contenedor-zona-wrapper" style="margin-top: 10px;">
+            <label><i class="fa-solid fa-motorcycle"></i> Zona de Entrega:</label>
+            <select id="select-zona-delivery" onchange="cambiarZonaDelivery(this.value)">
+              <option value="">-- Elige una zona --</option>
+              <!-- Se llena desde JS -->
+            </select>
+          </div>
+        
+          <!-- Dirección exacta -->
+          <div style="margin-top: 10px;" id="contenedor-direccion">
+            <label><i class="fa-solid fa-location-dot"></i> Dirección o Punto de Referencia:</label>
+            <input type="text" id="input-direccion-cliente" placeholder="Calle principal, casa..." style="width: 100%;" oninput="guardarDatosCheckout()">
+          </div>
+        
+          <!-- Método de Pago -->
+          <div style="margin-top: 10px;">
+            <label><i class="fa-solid fa-money-bill-wave"></i> Método de Pago:</label>
+            <select id="select-metodo-pago" onchange="guardarDatosCheckout()">
+              <option value="Pago Móvil (Bs.)">Pago Móvil (Bs.)</option>
+              <option value="Efectivo USD">Efectivo USD ($)</option>
+              <option value="Zelle">Zelle</option>
+              <option value="Binance Pay">Binance Pay (USDT)</option>
+            </select>
+          </div>
+        </div>
+        <button id="btn-checkout" class="btn-primary" onclick="iniciarCheckout()">Continuar Pedido por WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notificación Toast No Invasiva -->
+  <div id="toast" class="toast hidden">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toast-message">Producto agregado</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+        <a href="https://instagram.com/duoshopstore" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <a href="#" onclick="alert('Función no disponible en plan Starter'); return false;"><i class="fa-regular fa-file-pdf"></i> Descargar Catálogo PDF</a>
+    </div>
+    <p>&copy; 2024 <span id="footer-nombre">Duo Shop Store</span>. Desarrollado por LP Freelancers</p>
+  </footer>
+
+  <!-- Script de configuración -->
+  <script src="duo.js"></script>
+</body>
+</html>
