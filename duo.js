@@ -1,25 +1,24 @@
 // duo.js - Lógica del Catálogo Duo Shop Store (Plan Starter)
+// Versión corregida y optimizada sin bloqueos de caché
 
-// CONFIGURACIÓN BÁSICA
-// !!! EDITA ESTA LÍNEA CON EL NÚMERO DE DUO SHOP STORE (Incluye cód. de país, sin + ni espacios) !!!
-const WHATSAPP_NUMERO = "584126216661"; 
+const WHATSAPP_NUMERO = "584140000000"; // Edítalo con tu número real
 
 const storeConfig = {
   nombre_tienda: "Duo Shop Store",
-  tasa_cambio: 791, // Tasa BCV de ejemplo, cámbiala manualmente aquí si no usas la versión con Google Sheets
+  tasa_cambio: 36.50,
   simbolo_moneda_alt: "Bs.",
   mensaje_bienvenida: "¡Bienvenidos a Duo Shop Store!"
 };
 
-// CATÁLOGO DE PRODUCTOS DE EJEMPLO (Placeholder)
+// CATÁLOGO DE PRODUCTOS DE EJEMPLO
 let productosList = [
   {
     id_producto: "duo-001",
     nombre: "Mascarilla Hidratante L'Oréal Pro",
-    categoria: "Cabello",
+    categoria: "Skincare",
     marca: "L'Oréal",
     precio_usd: 18.50,
-    imagen_url: "https://http2.mlstatic.com/D_NQ_NP_699059-MLV43752478143_102020-O.jpg",
+    imagen_url: "https://images.unsplash.com/photo-1608248597359-f52915f60acd?w=400",
     activo: true
   },
   {
@@ -28,7 +27,7 @@ let productosList = [
     categoria: "Maquillaje",
     marca: "Maybelline",
     precio_usd: 12.99,
-    imagen_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk8K_uO4U5I_fI1n9g6i3i4h3k3g7i3i9LqQ&s",
+    imagen_url: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400",
     activo: true
   },
   {
@@ -37,71 +36,62 @@ let productosList = [
     categoria: "Maquillaje",
     marca: "Urban Decay",
     precio_usd: 45.00,
-    imagen_url: "https://m.media-amazon.com/images/I/713w-ab0-HL._AC_SX679_.jpg",
+    imagen_url: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400",
     activo: true,
-    destacado: true // Etiqueta Más Vendido
+    destacado: true
   },
   {
     id_producto: "duo-004",
-    nombre: "Serum Facial Vitamina C The Ordinary",
+    nombre: "Serum Facial Vitamina C",
     categoria: "Skincare",
     marca: "The Ordinary",
     precio_usd: 14.50,
-    imagen_url: "https://images.ctfassets.net/wlrcs7jkz5g3/6J0iI3I3I3I3I3I3I3I3I9/378301948349f31e8f48e644e245830f/TO_100_VCSS_01.png?q=70",
+    imagen_url: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400",
     activo: true
   },
   {
     id_producto: "duo-005",
-    nombre: "Vestido Casual Verano - Varios Talles",
+    nombre: "Vestido Casual Verano",
     categoria: "Ropa",
     marca: "Duo Import",
     precio_usd: 28.00,
-    imagen_url: "https://img.ltwebstatic.com/images3_pi/2022/05/16/16526908157e6a5c447b75f8a14a4b1b46851a16e8_thumbnail_900x.webp",
+    imagen_url: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400",
     activo: true
   },
   {
     id_producto: "duo-006",
-    nombre: "Labial SuperStay Matte Ink Maybelline",
+    nombre: "Labial Matte de Larga Duración",
     categoria: "Maquillaje",
     marca: "Maybelline",
     precio_usd: 11.00,
-    imagen_url: "https://i5.walmartimages.com/seo/Maybelline-SuperStay-Matte-Ink-Liquid-Lipstick-Pioneer_980c5d8b-9b8e-4745-8522-f45099070d7e.041a7df783b4d09e0381495a96d26760.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",
-    activo: true,
-    stock: 0 // Etiqueta Agotado
+    imagen_url: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400",
+    activo: true
   }
 ];
 
-// LÓGICA DE LA APLICACIÓN (No editar)
 let carrito = JSON.parse(localStorage.getItem("duo_carrito")) || [];
 let categoriaActiva = "TODOS";
-let modoMonedaBs = false; // Empieza en USD
-let toastTimeout;
+let modoMonedaBs = false;
 let tipoEntregaSeleccionada = "delivery";
-let direccionCliente = "";
-let metodoPagoSeleccionado = "Pago Móvil (Bs.)";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Inicialización
-  document.getElementById("nombre-tienda").textContent = storeConfig.nombre_tienda;
-  document.getElementById("footer-nombre").textContent = storeConfig.nombre_tienda;
-  document.getElementById("mensaje-bienvenida").textContent = storeConfig.mensaje_bienvenida;
+  const elNombre = document.getElementById("nombre-tienda");
+  const elFooter = document.getElementById("footer-nombre");
+  const elBienvenida = document.getElementById("mensaje-bienvenida");
+
+  if (elNombre) elNombre.textContent = storeConfig.nombre_tienda;
+  if (elFooter) elFooter.textContent = storeConfig.nombre_tienda;
+  if (elBienvenida) elBienvenida.textContent = storeConfig.mensaje_bienvenida;
   
-  // Mostrar tasa referencial (estática en plan starter)
-  const simAlt = storeConfig.simbolo_moneda_alt;
-  const tasaValor = storeConfig.tasa_cambio;
-  const heroText = document.querySelector(".store-hero .hero-text");
-  if(heroText && tasaValor) {
-      const tasaP = document.createElement('p');
-      tasaP.innerHTML = `Tasa BCV Referencial: <strong>1 USD = ${simAlt} ${tasaValor.toFixed(2)}</strong>`;
-      heroText.appendChild(tasaP);
-  }
+  // Ocultar texto de carga si existe
+  const loadingEl = document.getElementById("loading");
+  if (loadingEl) loadingEl.style.display = "none";
 
   renderizarCategorias();
   renderizarProductos(productosList);
   actualizarContadorCarrito();
 });
 
-// Renderizar Categorías
 function renderizarCategorias() {
   const container = document.getElementById("categorias-container");
   if (!container) return;
@@ -121,7 +111,6 @@ function seleccionarCategoria(cat) {
   filtrarProductos();
 }
 
-// Renderizar Productos
 function renderizarProductos(lista) {
   const grid = document.getElementById("grid-productos");
   if (!grid) return;
@@ -130,7 +119,6 @@ function renderizarProductos(lista) {
   const tasa = Number(storeConfig.tasa_cambio) || 1;
   const simAlt = storeConfig.simbolo_moneda_alt;
 
-  // Filtrar por categoría activa primero
   const productosFiltrados = lista.filter(prod => 
     (categoriaActiva === "TODOS" || prod.categoria === categoriaActiva) && prod.activo
   );
@@ -143,48 +131,33 @@ function renderizarProductos(lista) {
   productosFiltrados.forEach(prod => {
     const precioUSD = Number(prod.precio_usd);
     const precioBs = (precioUSD * tasa).toFixed(2);
-    const stockActual = prod.stock !== undefined ? prod.stock : 99;
-    const estaAgotado = stockActual <= 0;
-    const esDestacado = prod.destacado;
+    
+    const textoPrecioMain = modoMonedaBs ? `${simAlt} ${precioBs}` : `$${precioUSD.toFixed(2)}`;
+    const textoPrecioSub = modoMonedaBs ? `($${precioUSD.toFixed(2)})` : `(${simAlt} ${precioBs})`;
 
-    const textoPrecioMain = modoMonedaBs 
-      ? `${simAlt} ${precioBs}` 
-      : `$${precioUSD.toFixed(2)}`;
-      
-    const textoPrecioSub = modoMonedaBs 
-      ? `($${precioUSD.toFixed(2)})` 
-      : `(${simAlt} ${precioBs})`;
-
-    let badgeHTML = "";
-    if (estaAgotado) {
-      badgeHTML = `<span class="product-badge badge-agotado">Agotado</span>`;
-    } else if (esDestacado) {
-        badgeHTML = `<span class="product-badge badge-popular"><i class="fa-solid fa-fire"></i> Más Vendido</span>`;
-    }
+    let badgeHTML = prod.destacado ? `<span class="product-badge badge-popular">Popular</span>` : "";
 
     const card = document.createElement("div");
-    card.className = `product-card ${estaAgotado ? 'card-agotado' : ''}`;
+    card.className = "product-card";
     card.innerHTML = `
       <div style="position: relative;">
         ${badgeHTML}
-        <img class="product-img" src="${prod.imagen_url || 'https://i.imgur.com/fQhO7fI.png'}" alt="${prod.nombre}" loading="lazy">
+        <img class="product-img" src="${prod.imagen_url}" alt="${prod.nombre}" loading="lazy">
         <span class="product-brand">${prod.marca || ''}</span>
         <h4 class="product-title">${prod.nombre}</h4>
       </div>
       <div>
         <div class="product-price-main">${textoPrecioMain}</div>
         <div class="product-price-sub">${textoPrecioSub}</div>
-        ${estaAgotado 
-          ? `<button class="btn-add btn-disabled" disabled>Agotado</button>` 
-          : `<button class="btn-add" onclick="agregarAlCarrito('${prod.id_producto}')"><i class="fa-solid fa-plus"></i> Agregar</button>`
-        }
+        <button class="btn-add" onclick="agregarAlCarrito('${prod.id_producto}')">
+          <i class="fa-solid fa-plus"></i> Agregar
+        </button>
       </div>
     `;
     grid.appendChild(card);
   });
 }
 
-// Filtro de Búsqueda
 function filtrarProductos() {
   const inputBusqueda = document.getElementById("input-busqueda");
   const query = inputBusqueda ? inputBusqueda.value.toLowerCase() : "";
@@ -194,10 +167,9 @@ function filtrarProductos() {
     const coincideTexto = prod.nombre.toLowerCase().includes(query) || (prod.marca && prod.marca.toLowerCase().includes(query));
     return coincideCat && coincideTexto;
   });
-  renderizarProductos(filtrados); // Renderiza pero mantiene la categoría activa
+  renderizarProductos(filtrados);
 }
 
-// Switch de Moneda
 function toggleMoneda() {
   modoMonedaBs = !modoMonedaBs;
   const labelCurrency = document.getElementById("label-currency");
@@ -205,14 +177,8 @@ function toggleMoneda() {
     labelCurrency.textContent = modoMonedaBs ? "Ver en USD" : "Ver en Bs.";
   }
   filtrarProductos();
-  
-  const modalCarrito = document.getElementById("modal-carrito");
-  if (modalCarrito && !modalCarrito.classList.contains("hidden")) {
-    renderizarCarrito();
-  }
 }
 
-// Manejo del Carrito
 function agregarAlCarrito(id) {
   const prod = productosList.find(p => p.id_producto === id);
   if (!prod) return;
@@ -231,28 +197,6 @@ function agregarAlCarrito(id) {
 
   guardarCarrito();
   actualizarContadorCarrito();
-  mostrarToast(`Agregado: ${prod.nombre}`);
-}
-
-function modificarCantidad(id, delta) {
-  const index = carrito.findIndex(item => item.id === id);
-  if (index === -1) return;
-
-  carrito[index].cantidad += delta;
-  if (carrito[index].cantidad <= 0) {
-    carrito.splice(index, 1);
-  }
-
-  guardarCarrito();
-  actualizarContadorCarrito();
-  renderizarCarrito();
-}
-
-function eliminarDelCarrito(id) {
-  carrito = carrito.filter(item => item.id !== id);
-  guardarCarrito();
-  actualizarContadorCarrito();
-  renderizarCarrito();
 }
 
 function guardarCarrito() {
@@ -292,62 +236,49 @@ function renderizarCarrito() {
   }
 
   const tasa = Number(storeConfig.tasa_cambio) || 1;
-  const simAlt = storeConfig.simbolo_moneda_alt;
   let totalUSD = 0;
 
   carrito.forEach(item => {
-    const subtotalUSD = item.precio_usd * item.cantidad;
-    totalUSD += subtotalUSD;
-
+    totalUSD += item.precio_usd * item.cantidad;
     const row = document.createElement("div");
     row.className = "cart-item-row";
     row.innerHTML = `
-      <div class="cart-item-info">
+      <div>
         <div class="cart-item-name">${item.nombre}</div>
-        <div class="cart-item-price">$${item.precio_usd.toFixed(2)} c/u</div>
+        <div class="cart-item-price">$${item.precio_usd.toFixed(2)} x ${item.cantidad}</div>
       </div>
-      <div class="cart-qty-controls">
-        <button class="btn-qty" onclick="modificarCantidad('${item.id}', -1)">-</button>
-        <span style="font-weight: 600; font-size: 13px; min-width: 20px; text-align:center;">${item.cantidad}</span>
-        <button class="btn-qty" onclick="modificarCantidad('${item.id}', 1)">+</button>
-        <button class="btn-remove" onclick="eliminarDelCarrito('${item.id}')" title="Eliminar">
-          <i class="fa-regular fa-trash-can"></i>
-        </button>
-      </div>
+      <button onclick="eliminarDelCarrito('${item.id}')" style="background:none; border:none; color:red; cursor:pointer;">
+        <i class="fa-regular fa-trash-can"></i>
+      </button>
     `;
     container.appendChild(row);
   });
 
-  // Cálculo de Delivery (Fijo en Plan Starter)
-  let costoDeliveryUSD = 0;
-  if (tipoEntregaSeleccionada === "delivery") {
-    // Ejemplo: delivery fijo de $2.00. En plan starter no hay zonas variables.
-    costoDeliveryUSD = 2.00;
-  }
-
-  const totalGeneralUSD = totalUSD + costoDeliveryUSD;
-  const totalBs = totalGeneralUSD * tasa;
-
-  // Mostrar totales
-  document.getElementById("total-usd").textContent = `$${totalGeneralUSD.toFixed(2)}`;
-  document.getElementById("total-bs").textContent = `${simAlt} ${totalBs.toFixed(2)}`;
-
-  // Mostrar/Ocultar campos de delivery
-  const wrapperZona = document.getElementById("contenedor-zona-wrapper");
-  const wrapperDir = document.getElementById("contenedor-direccion");
-  const labelTotalBs = document.getElementById("label-total-bs");
-  
-  // Ocultar selección de zona compleja en starter
-  if(wrapperZona) wrapperZona.style.display = "none";
-
-  if (tipoEntregaSeleccionada === "pickup") {
-    if (wrapperDir) wrapperDir.style.display = "none";
-  } else {
-    if (wrapperDir) wrapperDir.style.display = "block";
-  }
-  
-  if(labelTotalBs) labelTotalBs.textContent = `Total Bs (Tasa ${tasa.toFixed(2)}):`;
+  const totalBs = totalUSD * tasa;
+  document.getElementById("total-usd").textContent = `$${totalUSD.toFixed(2)}`;
+  document.getElementById("total-bs").textContent = `Bs. ${totalBs.toFixed(2)}`;
 }
 
-function cambiarTipoEntrega(tipo) {
-  tipoEntregaSeleccionada =
+function eliminarDelCarrito(id) {
+  carrito = carrito.filter(item => item.id !== id);
+  guardarCarrito();
+  actualizarContadorCarrito();
+  renderizarCarrito();
+}
+
+function iniciarCheckout() {
+  if (carrito.length === 0) {
+    alert("Tu carrito está vacío");
+    return;
+  }
+  let mensaje = "¡Hola! Deseo realizar el siguiente pedido en Duo Shop Store:\n\n";
+  let totalUSD = 0;
+  carrito.forEach(item => {
+    mensaje += `- ${item.cantidad}x ${item.nombre} ($${(item.precio_usd * item.cantidad).toFixed(2)})\n`;
+    totalUSD += item.precio_usd * item.cantidad;
+  });
+  mensaje += `\n*Total a pagar: $${totalUSD.toFixed(2)}*`;
+  
+  const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, '_blank');
+}
