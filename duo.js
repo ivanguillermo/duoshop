@@ -2,11 +2,11 @@
 
 // CONFIGURACIÓN BÁSICA
 // !!! EDITA ESTA LÍNEA CON EL NÚMERO DE DUO SHOP STORE (Incluye cód. de país, sin + ni espacios) !!!
-const WHATSAPP_NUMERO = "584140000000"; 
+const WHATSAPP_NUMERO = "584126216661"; 
 
 const storeConfig = {
   nombre_tienda: "Duo Shop Store",
-  tasa_cambio: 36.50, // Tasa BCV de ejemplo, cámbiala manualmente aquí si no usas la versión con Google Sheets
+  tasa_cambio: 791, // Tasa BCV de ejemplo, cámbiala manualmente aquí si no usas la versión con Google Sheets
   simbolo_moneda_alt: "Bs.",
   mensaje_bienvenida: "¡Bienvenidos a Duo Shop Store!"
 };
