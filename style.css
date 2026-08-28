@@ -1,0 +1,250 @@
+:root {
+  /* Paleta de colores Duo Shop Store */
+  --color-primario: #1B5E20;     /* Verde Oscuro */
+  --color-secundario: #14B8A6;   /* Cian/Verde Agua "Duo" */
+  --color-acento: #F9A8D4;       /* Rosa Pastel "Duo" */
+  
+  --color-fondo: #F4F6F8;        /* Fondo muy claro */
+  --color-tarjeta: #FFFFFF;
+  --color-texto: #1a1a1a;
+  --color-texto-secundario: #64748b;
+  --color-borde: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  padding-bottom: 70px; /* Espacio para el footer en móviles */
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--color-tarjeta);
+  padding: 10px 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+}
+
+.brand-text h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primario);
+}
+.store-tagline {
+    font-size: 0.75rem;
+    color: var(--color-texto-secundario);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.currency-toggle-btn {
+  background: #f1f5f9;
+  color: var(--color-texto-secundario);
+  border: 1px solid var(--color-borde);
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cart-btn {
+  background: var(--color-primario);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Banner Hero */
+.store-hero {
+  background-color: var(--color-primario);
+  color: white;
+  padding: 20px 16px;
+  margin-top: 10px;
+}
+.hero-banner-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.hero-text h2 {
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+.hero-text p {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+.hero-badge {
+  background: rgba(255,255,255,0.2);
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+/* Controles Búsqueda */
+.controls-container {
+  max-width: 1200px;
+  margin: 16px auto 16px auto;
+  padding: 0 16px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--color-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 8px;
+  font-size: 14px;
+  background: transparent;
+}
+
+.categories-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.cat-btn {
+  background: var(--color-tarjeta);
+  border: 1px solid var(--color-borde);
+  padding: 6px 14px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.cat-btn.active {
+  background: var(--color-secundario);
+  color: #fff;
+  border-color: var(--color-secundario);
+}
+
+/* Grid Productos */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.product-card {
+  background: var(--color-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.product-img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.product-brand {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--color-texto-secundario);
+  font-weight: 700;
+}
+
+.product-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 2px 0 6px 0;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-price-main {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primario);
+}
+
+.product-price-sub {
+  font-size: 10px;
+  color: var(--color-texto-secundario);
+  margin-bottom: 8px;
+}
+
+.btn-add {
+  background: var(--color-secundario);
+  color: #fff;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
