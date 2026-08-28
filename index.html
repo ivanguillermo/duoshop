@@ -1,160 +1,178 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  
-  <!-- SEO & Metadatos Base -->
-  <title>Duo Shop Store | Catálogo Online</title>
-  <meta name="description" content="Catálogo completo de productos importados, maquillaje y ropa de Duo Shop Store en Barquisimeto.">
-  <meta name="author" content="Duo Shop Store">
-  
-  <!-- Favicon Dinámico (Usando el logo de Duo) -->
-  <link id="dynamic-favicon" rel="icon" type="image/png" href="https:ivanguillermo.github.io/duoshop/assets/duo_logo.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duo Shop Store | Productos Importados, Skincare, Makeup & Ropa</title>
+    <meta name="description" content="Tienda física en Barquisimeto, Lara. Productos importados originales, skincare, makeup y ropa. Compra online con catálogo interactivo y atención por WhatsApp.">
+    <meta name="keywords" content="Duo Shop Store, Barquisimeto, maquillaje, skincare, ropa importada, Victoria Secret, tienda online Venezuela">
+    
+    <!-- Open Graph / SEO -->
+    <meta property="og:title" content="Duo Shop Store">
+    <meta property="og:description" content="Productos importados originales, skincare, makeup y ropa en Barquisimeto.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://duoshopstore.github.io/">
+    
+    <!-- PWA Manifest & Theme -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#12b5cb">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
 
-  <link rel="stylesheet" href="duoshop.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- Enlace PWA Manifest -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="##2dd4bf"> <!-- Verde Oscuro -->
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Cabecera Dinámica -->
-  <header class="navbar">
-    <div class="nav-container">
-      <div class="brand">
-        <img id="logo-tienda" src="https://ivanguillermo.github.io/duoshop/assets/duo_logo.jpg" alt="Duo Shop Store Logo" class="logo-img">
-        <div class="brand-text">
-          <h1 id="nombre-tienda">Duo Shop Store</h1>
-          <p class="store-tagline">Tu tienda online en Lara</p>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="#">
+                    <img src="duo_logo.jpg" alt="Duo Shop Store Logo" class="brand-logo">
+                    <span class="brand-name">Duo <strong>Shop Store</strong></span>
+                </a>
+            </div>
+            
+            <div class="search-bar-container">
+                <input type="text" id="searchInput" placeholder="Buscar productos (ej. Victoria's Secret, labial, vestido)...">
+                <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            <div class="header-actions">
+                <button id="downloadPdfBtn" class="btn-pdf" title="Descargar Catálogo PDF">
+                    <i class="fa-solid fa-file-pdf"></i> <span>Catálogo PDF</span>
+                </button>
+                <a href="https://wa.me/message/UOXSVOEIG73ME1" target="_blank" class="btn-whatsapp-header" title="Contacto WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
         </div>
-      </div>
-      <div class="nav-actions">
-        <!-- Switch de Moneda -->
-        <button id="btn-currency" class="currency-toggle-btn" onclick="toggleMoneda()">
-          <i class="fa-solid fa-coins"></i> <span id="label-currency">Ver en Bs.</span>
-        </button>
 
-        <!-- Botón Carrito -->
-        <button id="btn-cart" class="cart-btn" onclick="toggleCarrito()">
-          <i class="fa-solid fa-cart-shopping"></i>
-          <span id="cart-count">0</span>
-        </button>
-      </div>
-    </div>
-  </header>
+        <!-- Category Bar -->
+        <nav class="category-nav">
+            <div class="categories-container" id="categoryContainer">
+                <button class="cat-btn active" data-category="todos">Todos</button>
+                <button class="cat-btn" data-category="Skincare">Skincare</button>
+                <button class="cat-btn" data-category="Makeup">Makeup</button>
+                <button class="cat-btn" data-category="Fragancias">Fragancias</button>
+                <button class="cat-btn" data-category="Ropa">Ropa</button>
+                <button class="cat-btn" data-category="Accesorios">Accesorios</button>
+            </div>
+        </nav>
+    </header>
 
-  <!-- Banner de Bienvenida / Hero Estilo Boutique -->
-<section class="store-hero">
-  <div class="hero-banner-content">
-    <div class="hero-badge">✨ Catálogo Exclusivo · Originales</div>
-    <div class="hero-text">
-      <h2 id="mensaje-bienvenida">¡Bienvenidos a Duo Shop Store!</h2>
-      <p>Productos importados, skincare y fragancias que elevan tu estilo. Envíos en Barquisimeto y Cabudare.</p>
-    </div>
-  </div>
-</section>
-
-  <!-- Buscador y Filtros -->
-  <div class="controls-container">
-    <div class="search-bar">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="input-busqueda" placeholder="Buscar producto o marca..." oninput="filtrarProductos()">
-    </div>
-    <div id="categorias-container" class="categories-bar">
-      <!-- Botones de categoría generados dinámicamente -->
-    </div>
-  </div>
-
-  <!-- Catálogo de Productos -->
-  <main class="main-content">
-    <div id="loading" class="spinner">Cargando catálogo...</div>
-    <div id="grid-productos" class="product-grid">
-      <!-- Tarjetas de producto generadas dinámicamente -->
-    </div>
-  </main>
-
-  <!-- Modal / Drawer del Carrito -->
-  <div id="modal-carrito" class="cart-modal hidden">
-    <div class="cart-overlay" onclick="toggleCarrito()"></div>
-    <div class="cart-content">
-      <div class="cart-header">
-        <h3><i class="fa-solid fa-cart-shopping"></i> Tu Pedido</h3>
-        <button class="close-btn" onclick="toggleCarrito()">&times;</button>
-      </div>
-      <div id="items-carrito" class="cart-items">
-        <!-- Items agregados dinámicamente -->
-      </div>
-      <div class="cart-footer">
-        <div class="cart-totals">
-          <div class="total-row">
-            <span>Total USD:</span>
-            <strong id="total-usd">$0.00</strong>
-          </div>
-          <div class="total-row secondary-total">
-            <span id="label-total-bs">Total Bs:</span>
-            <strong id="total-bs">Bs. 0.00</strong>
-          </div>
+    <!-- BANNER -->
+    <section class="hero-banner">
+        <div class="banner-content">
+            <div class="banner-text">
+                <span class="badge-tienda"><i class="fa-solid fa-store"></i> Tienda Física & Online</span>
+                <h1>El Producto que tanto quieres lo tenemos para ti...</h1>
+                <p>Productos importados 100% originales. Ubicados en <strong>Barquisimeto - Lara</strong>. Realizamos entregas personales y envíos nacionales a toda Venezuela.</p>
+                <div class="banner-btns">
+                    <a href="#catalogo" class="btn-primary">Ver Catálogo</a>
+                    <a href="https://wa.me/message/UOXSVOEIG73ME1" target="_blank" class="btn-secondary"><i class="fa-brands fa-whatsapp"></i> Escríbenos</a>
+                </div>
+            </div>
+            <div class="banner-image">
+                <img src="image_c0cba9.jpg" alt="Victoria Secret y Productos Duo Shop">
+                <div class="location-box">
+                    <i class="fa-solid fa-location-dot"></i> Barquisimeto, Edo. Lara
+                </div>
+            </div>
         </div>
-        
-        <!-- Sección de Checkout Delivery -->
-        <div class="checkout-delivery-box">
-          <!-- Tipo de Entrega -->
-          <label><i class="fa-solid fa-store"></i> Tipo de Entrega:</label>
-          <select id="select-tipo-entrega" onchange="cambiarTipoEntrega(this.value)">
-            <option value="delivery">Delivery a domicilio</option>
-            <option value="pickup">Retiro en Tienda (Pickup)</option>
-          </select>
-        
-          <!-- Contenedor dinámico de zonas (solo si es delivery) -->
-          <div id="contenedor-zona-wrapper" style="margin-top: 10px;">
-            <label><i class="fa-solid fa-motorcycle"></i> Zona de Entrega:</label>
-            <select id="select-zona-delivery" onchange="cambiarZonaDelivery(this.value)">
-              <option value="">-- Elige una zona --</option>
-              <!-- Se llena desde JS -->
-            </select>
-          </div>
-        
-          <!-- Dirección exacta -->
-          <div style="margin-top: 10px;" id="contenedor-direccion">
-            <label><i class="fa-solid fa-location-dot"></i> Dirección o Punto de Referencia:</label>
-            <input type="text" id="input-direccion-cliente" placeholder="Calle principal, casa..." style="width: 100%;" oninput="guardarDatosCheckout()">
-          </div>
-        
-          <!-- Método de Pago -->
-          <div style="margin-top: 10px;">
-            <label><i class="fa-solid fa-money-bill-wave"></i> Método de Pago:</label>
-            <select id="select-metodo-pago" onchange="guardarDatosCheckout()">
-              <option value="Pago Móvil (Bs.)">Pago Móvil (Bs.)</option>
-              <option value="Efectivo USD">Efectivo USD ($)</option>
-              <option value="Zelle">Zelle</option>
-              <option value="Binance Pay">Binance Pay (USDT)</option>
-            </select>
-          </div>
+    </section>
+
+    <!-- CATALOGO -->
+    <main class="main-catalog" id="catalogo">
+        <div class="catalog-header">
+            <h2>Catálogo de Productos</h2>
+            <p id="productCountInfo">Mostrando 0 artículos</p>
         </div>
-        <button id="btn-checkout" class="btn-primary" onclick="iniciarCheckout()">Continuar Pedido por WhatsApp</button>
-      </div>
+
+        <!-- Grid de productos -->
+        <div class="products-grid" id="productsGrid">
+            <!-- Cards generadas dinámicamente -->
+            <div class="loading-state">
+                <i class="fa-solid fa-spinner fa-spin"></i> Cargando inventario desde Google Sheets...
+            </div>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination-container" id="paginationContainer">
+            <!-- Botones de paginación dinámicos -->
+        </div>
+    </main>
+
+    <!-- MODAL DETALLE DE PRODUCTO -->
+    <div class="product-modal" id="productModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="modal-grid">
+                <div class="modal-img-container">
+                    <img id="modalImg" src="" alt="Producto">
+                </div>
+                <div class="modal-details">
+                    <span id="modalCategory" class="modal-cat">Categoría</span>
+                    <h2 id="modalTitle">Título del Producto</h2>
+                    <div class="modal-price" id="modalPrice">$0.00</div>
+                    <p id="modalDesc" class="modal-desc">Descripción detallada del artículo.</p>
+                    
+                    <div class="modal-actions">
+                        <a href="#" id="modalWaBtn" target="_blank" class="btn-wa-order">
+                            <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Notificación Toast No Invasiva -->
-  <div id="toast" class="toast hidden">
-    <i class="fa-solid fa-circle-check"></i>
-    <span id="toast-message">Producto agregado</span>
-  </div>
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-brand">
+                    <img src="duo_logo.jpg" alt="Logo">
+                    <span>Duo <strong>Shop Store</strong></span>
+                </div>
+                <p>Tu tienda de confianza con productos importados originales, skincare, makeup y ropa en Barquisimeto, Lara.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#catalogo">Catálogo</a></li>
+                    <li><a href="https://www.instagram.com/duoshopstore/" target="_blank">Instagram</a></li>
+                    <li><a href="https://wa.me/message/UOXSVOEIG73ME1" target="_blank">WhatsApp Directo</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Ubicación & Contacto</h3>
+                <p><i class="fa-solid fa-location-dot"></i> Barquisimeto - Lara, Venezuela</p>
+                <p><i class="fa-solid fa-truck"></i> Envíos nacionales y entregas personales</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/duoshopstore/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://wa.me/message/UOXSVOEIG73ME1" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Duo Shop Store. Todos los derechos reservados. Desarrollado con Google Apps Script & PWA.</p>
+        </div>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-links">
-        <a href="https://instagram.com/duoshopstore" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
-        <a href="#" onclick="alert('Función no disponible en plan Starter'); return false;"><i class="fa-regular fa-file-pdf"></i> Descargar Catálogo PDF</a>
-    </div>
-    <p>&copy; 2026 <span id="footer-nombre">Duo Shop Store</span>. Desarrollado por LP Freelancers</p>
-  </footer>
-
-  <!-- Script de configuración -->
-  <script src="duo.js"></script>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('ServiceWorker registrado con éxito:', reg.scope))
+                    .catch(err => console.log('Error al registrar ServiceWorker:', err));
+            });
+        }
+    </script>
 </body>
 </html>
