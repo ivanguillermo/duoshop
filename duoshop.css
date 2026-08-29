@@ -648,7 +648,7 @@ body {
 }
 
 .social-links a {
-    background: #333;
+    background: var(--accent-gold);;
     color: white;
     width: 36px;
     height: 36px;
