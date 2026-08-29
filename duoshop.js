@@ -70,7 +70,7 @@ function filterAndRender() {
     filteredProducts = allProducts.filter(item => {
         // USO DE PROTECCIÓN (|| ""): Evita que falle si alguna celda está vacía (undefined)
         const categoriaItem = (item.categoria || "").toLowerCase();
-        const tituloItem = (item.Titulo || "").toLowerCase();
+        const tituloItem = (item.titulo || "").toLowerCase();
         const descItem = (item.descripcion || "").toLowerCase();
 
         const matchesCategory = currentCategory === "todos" || categoriaItem === currentCategory.toLowerCase();
@@ -100,7 +100,7 @@ function renderGrid() {
     paginatedItems.forEach(item => {
         // NOTA: Se usa item.ID y item.Titulo con mayúsculas tal cual están en tu Google Sheet
         const idProd = item.ID || '';
-        const tituloProd = item.Titulo || 'Sin título';
+        const tituloProd = item.titulo || 'Sin título';
         const catProd = item.categoria || 'General';
         const descProd = item.descripcion || '';
         const precioProd = Number(item.precio) || 0;
@@ -154,11 +154,11 @@ function openModal(id) {
 
     document.getElementById("modalImg").src = product.imagen || product.imagen_link || 'duo_logo.jpg';
     document.getElementById("modalCategory").innerText = product.categoria || '';
-    document.getElementById("modalTitle").innerText = product.Titulo || '';
+    document.getElementById("modalTitle").innerText = product.titulo || '';
     document.getElementById("modalPrice").innerText = `$${Number(product.precio || 0).toFixed(2)}`;
     document.getElementById("modalDesc").innerText = product.descripcion || '';
 
-    const tituloModal = product.Titulo || 'este producto';
+    const tituloModal = product.titulo || 'este producto';
     const precioModal = product.precio || '0';
     const waText = encodeURIComponent(`¡Hola Duo Shop Store! Estoy interesado/a en el producto: *${tituloModal}* ($${precioModal}) que vi en su catálogo web.`);
     document.getElementById("modalWaBtn").href = `https://wa.me/message/UOXSVOEIG73ME1?text=${waText}`;
