@@ -37,6 +37,13 @@ function setupEventListeners() {
         currentPage = 1;
         filterAndRender();
     });
+    
+    document.getElementById("productsGrid").addEventListener("click", (e) => {
+        const card = e.target.closest(".product-card");
+        if (!card) return;
+        const idProd = card.getAttribute("data-id");
+        openModal(idProd);
+    });
 
     document.getElementById("searchInput").addEventListener("keyup", (e) => {
         currentSearch = e.target.value.trim().toLowerCase();
@@ -98,7 +105,6 @@ function renderGrid() {
 
     let html = "";
     paginatedItems.forEach(item => {
-        // NOTA: Se usa item.ID y item.Titulo con mayúsculas tal cual están en tu Google Sheet
         const idProd = item.ID || '';
         const tituloProd = item.titulo || 'Sin título';
         const catProd = item.categoria || 'General';
@@ -106,8 +112,9 @@ function renderGrid() {
         const precioProd = Number(item.precio) || 0;
         const imagenProd = item.imagen || item.imagen_link || 'duo_logo.jpg';
 
+        // NOTA: Se removió el onclick inline y se añadió un atributo data-id
         html += `
-            <div class="product-card" onclick="openModal('${idProd}')">
+            <div class="product-card" data-id="${idProd}">
                 <div class="product-img-wrap">
                     <span class="product-cat-tag">${catProd}</span>
                     <img src="${imagenProd}" alt="${tituloProd}" loading="lazy" onerror="this.src='duo_logo.jpg'">
