@@ -130,7 +130,7 @@ body {
 }
 
 .btn-whatsapp-header {
-    background: #25d366;
+    background: var(--accent-gold);
     color: white;
     width: 38px;
     height: 38px;
