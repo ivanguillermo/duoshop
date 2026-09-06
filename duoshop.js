@@ -176,4 +176,27 @@ function openModal(id) {
 function closeModal() {
     document.getElementById("productModal").classList.remove("active");
 }
+let deferredPrompt;
 
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Previene la barra por defecto en algunos móviles
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Muestra tu botón de instalación
+    const installBtn = document.getElementById('pwaInstallBtn');
+    if (installBtn) {
+        installBtn.style.display = 'inline-flex';
+        
+        installBtn.addEventListener('click', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('El usuario aceptó instalar la PWA');
+                }
+                deferredPrompt = null;
+            });
+        });
+    }
+});
