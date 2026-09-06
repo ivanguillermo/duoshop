@@ -8,6 +8,8 @@ let currentSearch = "";
 let currentPage = 1;
 const itemsPerPage = 12;
 
+let deferredPrompt;
+
 document.addEventListener("DOMContentLoaded", () => {
     fetchProducts();
     setupEventListeners();
@@ -176,7 +178,7 @@ function openModal(id) {
 function closeModal() {
     document.getElementById("productModal").classList.remove("active");
 }
-let deferredPrompt;
+
 
 window.addEventListener('beforeinstallprompt', (e) => {
     // Previene la barra por defecto en algunos móviles
