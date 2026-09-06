@@ -2,20 +2,23 @@
   "name": "Duo Shop Store",
   "short_name": "DuoShop",
   "description": "Tienda de productos importados, skincare, makeup y ropa en Barquisimeto.",
-  "start_url": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#faf8f5",
   "theme_color": "#12b5cb",
   "icons": [
     {
-      "src": ".assets/duo_logo.jpg",
+      "src": "./assets/duo_logo.jpg",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any maskable"
     },
     {
-      "src": ".assets/duo_logo.jpg",
+      "src": "./assets/duo_logo.jpg",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any maskable"
     }
   ]
 }
