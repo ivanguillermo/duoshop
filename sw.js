@@ -6,7 +6,7 @@ const urlsToCache = [
   './duoshop.js',
   './manifest.json',
   './assets/duo_logo.jpg',
-  './assets/ubicacion.png'
+  './assets/ubicacion.png',
   './terminos/index.html'
 ];
 
