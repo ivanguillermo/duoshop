@@ -158,10 +158,11 @@ function changePage(page) {
 }
 
 function openModal(id) {
-    const product = allProducts.find(p => String(p.ID) === String(id));
+    // Busca el producto soportando tanto 'item.ID' como 'item.id'
+    const product = allProducts.find(p => String(p.ID || p.id) === String(id));
     if (!product) return;
 
-    document.getElementById("modalImg").src = product.imagen || product.imagen_link || 'duo_logo.jpg';
+    document.getElementById("modalImg").src = product.imagen || product.imagen_link || './assets/duo_logo.jpg';
     document.getElementById("modalCategory").innerText = product.categoria || '';
     document.getElementById("modalTitle").innerText = product.titulo || '';
     document.getElementById("modalPrice").innerText = `$${Number(product.precio || 0).toFixed(2)}`;
