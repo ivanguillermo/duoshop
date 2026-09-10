@@ -93,6 +93,7 @@ function filterAndRender() {
     renderPagination();
 }
 
+    
 function renderGrid() {
     const grid = document.getElementById("productsGrid");
     
@@ -106,8 +107,8 @@ function renderGrid() {
     const paginatedItems = filteredProducts.slice(startIndex, endIndex);
 
     let html = "";
-    paginatedItems.forEach(item => {
-        const idProd = item.ID || '';
+    paginatedItems.forEach(item => {    
+        const idProd = item.id || item.ID || '';    
         const tituloProd = item.titulo || 'Sin título';
         const catProd = item.categoria || 'General';
         const descProd = item.descripcion || '';
@@ -158,15 +159,19 @@ function changePage(page) {
 }
 
 function openModal(id) {
-    // Busca el producto soportando tanto 'item.ID' como 'item.id'
-    const product = allProducts.find(p => String(p.ID || p.id) === String(id));
-    if (!product) return;
+    // Busca soportando minúsculas y mayúsculas
+    const product = allProducts.find(p => String(p.id || p.ID) === String(id));
+    
+    if (!product) {
+        console.warn("No se encontró el producto con ID:", id);
+        return; // Evita llenar el modal con datos vacíos si no hay coincidencia
+    }
 
-    document.getElementById("modalImg").src = product.imagen || product.imagen_link || './assets/duo_logo.jpg';
-    document.getElementById("modalCategory").innerText = product.categoria || '';
-    document.getElementById("modalTitle").innerText = product.titulo || '';
+    document.getElementById("modalImg").src = product.imagen || product.imagen_link || 'duo_logo.jpg';
+    document.getElementById("modalCategory").innerText = product.categoria || 'non';
+    document.getElementById("modalTitle").innerText = product.titulo || 'nan';
     document.getElementById("modalPrice").innerText = `$${Number(product.precio || 0).toFixed(2)}`;
-    document.getElementById("modalDesc").innerText = product.descripcion || '';
+    document.getElementById("modalDesc").innerText = product.descripcion || '.';
 
     const tituloModal = product.titulo || 'este producto';
     const precioModal = product.precio || '0';
